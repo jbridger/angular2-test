@@ -1,24 +1,23 @@
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Routes } from '@angular/router';
-
-import { AboutComponent } from './+about/index';
-import { HomeComponent } from './+home/index';
-import { NameListService, NavbarComponent, ToolbarComponent } from './shared/index';
+import { Component }       from '@angular/core';
+import {HeroService} from './shared/hero/hero.service';
+import { HeroesComponent } from './heroes.component';
+import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
-  selector: 'sd-app',
-  viewProviders: [NameListService],
-  templateUrl: 'app/app.component.html',
-  directives: [ROUTER_DIRECTIVES, NavbarComponent, ToolbarComponent]
+  selector: 'my-app',
+  template: `
+    <h1>{{title}}</h1>
+    <a [routerLink]="['/heroes']">Heroes</a>
+    <router-outlet></router-outlet>
+  `,
+
+  providers:  [HeroService],
+  directives: [ROUTER_DIRECTIVES]
 })
 @Routes([
-  {
-    path: '/',
-    component: HomeComponent
-  },
-  {
-    path: '/about',
-    component: AboutComponent
-  }
+  {path: '/heroes',        component: HeroesComponent},
+  // {path: '/hero/:id',      component: HeroDetailComponent}
 ])
-export class AppComponent {}
+export class AppComponent {
+  title = 'Tour of Heroes';
+}
